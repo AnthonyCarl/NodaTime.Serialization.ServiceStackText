@@ -8,7 +8,7 @@
     <owners>$author$</owners>
     <licenseUrl>https://github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <iconUrl>https://raw.github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText/master/NodaTimeLogo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>Copyright Anthony Carl 2014</copyright>
