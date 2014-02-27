@@ -44,6 +44,16 @@ The `SerivceStack.Text` serializer uses the same default serialization formats a
 - Serializer setup should only occur once in your application root.
 - Serialization setup should occur before any serialization occurs with `ServiceStack.Text` or there may be undesirable behavior.
 
+##Using the Code
+
+* [Install the NuGet Package](https://nuget.org/packages/NodaTime.Serialization.ServiceStackText)
+* [NuGet Packages from Latest Successful Build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt1209&tab=artifacts)
+* You can check out the code and run `build.bat`. It will create NuGet packages you can consume in `.\ReleasePackages` or you can directly use the resulting binaries. 
+* Build requirements
+  * .Net 3.5
+  * Powershell 2.0
+ 
+  
 ##Continuous Integration
 [CodeBetter.com CI Build Status:](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt1209) ![Build Status](http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt1209)/statusIcon)
 
