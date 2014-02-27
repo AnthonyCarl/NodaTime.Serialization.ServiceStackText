@@ -5,7 +5,9 @@ NodaTime.Serialization.ServiceStackText
 
 ##Typical Setup
 ```cs 
-DateTimeZoneProviders.Tzdb.CreateDefaultSerializersForNodaTime().ConfigureSerializersForNodaTime();
+DateTimeZoneProviders.Tzdb
+  .CreateDefaultSerializersForNodaTime()
+  .ConfigureSerializersForNodaTime();
 ```
 
 ##Optional Setup
