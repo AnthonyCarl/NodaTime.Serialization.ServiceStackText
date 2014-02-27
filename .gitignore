@@ -1,0 +1,6 @@
+/src/NodaTime.Serialization.ServiceStackText/bin
+/src/NodaTime.Serialization.ServiceStackText/obj
+/src/TestResults
+/src/NodaTime.Serialization.ServiceStackText.UnitTests/bin
+/src/NodaTime.Serialization.ServiceStackText.UnitTests/obj
+/src/*.suo
