@@ -13,11 +13,18 @@ namespace NodaTime.Serialization.ServiceStackText
         internal const char Iso8601TimeIntervalSeparator = '/';
         private readonly IServiceStackSerializer<Instant> _instantSerializer;
 
+        /// <summary>
+        /// <see cref="ExtendedIsoIntervalSerializer"/> does not use the ServiceStack.Text raw serializer.
+        /// </summary>
         public bool UseRawSerializer
         {
             get { return false; }
         }
 
+        /// <summary>
+        /// Creates an instance of the <see cref="ExtendedIsoIntervalSerializer"/>
+        /// </summary>
+        /// <param name="instantSerializer">The <see cref="Instant"/> serializer to use.</param>
         public ExtendedIsoIntervalSerializer(IServiceStackSerializer<Instant> instantSerializer)
         {
             if (instantSerializer == null)
@@ -27,6 +34,11 @@ namespace NodaTime.Serialization.ServiceStackText
             this._instantSerializer = instantSerializer;
         }
 
+        /// <summary>
+        /// Serializes the provided <see cref="Interval"/>.
+        /// </summary>
+        /// <param name="value">The <see cref="Interval"/> to to serialize.</param>
+        /// <returns>The serialized representation.</returns>
         public string Serialize(Interval value)
         {
             return string.Format(
@@ -37,6 +49,11 @@ namespace NodaTime.Serialization.ServiceStackText
                 );
         }
 
+        /// <summary>
+        /// Deserializes the given JSON.
+        /// </summary>
+        /// <param name="text">The JSON to parse.</param>
+        /// <returns>The deserialized <see cref="Interval"/>.</returns>
         public Interval Deserialize(string text)
         {
             if (string.IsNullOrEmpty(text))
@@ -55,7 +72,6 @@ namespace NodaTime.Serialization.ServiceStackText
             var start = _instantSerializer.Deserialize(startText);
             var end = _instantSerializer.Deserialize(endText);
             return new Interval(start, end);
-
         }
     }
 }

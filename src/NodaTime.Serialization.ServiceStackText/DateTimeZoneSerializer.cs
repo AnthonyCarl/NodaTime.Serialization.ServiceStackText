@@ -12,6 +12,9 @@ namespace NodaTime.Serialization.ServiceStackText
     {
         private readonly IDateTimeZoneProvider _provider;
 
+        /// <summary>
+        /// The <see cref="DateTimeZoneSerializer"/> does not use the raw serializer.
+        /// </summary>
         public bool UseRawSerializer { get { return false; } }
 
         /// <summary>
@@ -28,11 +31,21 @@ namespace NodaTime.Serialization.ServiceStackText
             this._provider = provider;
         }
 
+        /// <summary>
+        /// Serializes the provided <see cref="DateTimeZone"/>.
+        /// </summary>
+        /// <param name="value">The <see cref="DateTimeZone"/> to serialize.</param>
+        /// <returns>The serialized representation.</returns>
         public string Serialize(DateTimeZone value)
         {
             return value == null ? null : value.Id;
         }
 
+        /// <summary>
+        /// Deserializes the given JSON.
+        /// </summary>
+        /// <param name="text">The JSON to parse.</param>
+        /// <returns>The deserialized <see cref="DateTimeZone"/>.</returns>
         public DateTimeZone Deserialize(string text)
         {
             var id = _provider.Ids.FirstOrDefault(s => String.Equals(text, s, StringComparison.OrdinalIgnoreCase));

@@ -13,6 +13,9 @@ namespace NodaTime.Serialization.ServiceStackText
     {
         private readonly IServiceStackSerializer<Instant> _instantSerializer;
 
+        /// <summary>
+        /// <see cref="ComplexJsonIntervalSerializer"/> uses the ServiceStack.Text raw serializer.
+        /// </summary>
         public bool UseRawSerializer
         {
             get { return true; }
@@ -32,6 +35,11 @@ namespace NodaTime.Serialization.ServiceStackText
             this._instantSerializer = instantSerializer;
         }
 
+        /// <summary>
+        /// Serializes the provided <see cref="Interval"/>.
+        /// </summary>
+        /// <param name="value">The <see cref="Interval"/> to to serialize.</param>
+        /// <returns>The serialized representation.</returns>
         public string Serialize(Interval value)
         {
             var complexIntervalDto = new ComplexRawIntervalDto
@@ -43,6 +51,11 @@ namespace NodaTime.Serialization.ServiceStackText
             return JsonSerializer.SerializeToString(complexIntervalDto);
         }
 
+        /// <summary>
+        /// Deserializes the given JSON.
+        /// </summary>
+        /// <param name="text">The JSON to parse.</param>
+        /// <returns>The deserialized <see cref="Interval"/>.</returns>
         public Interval Deserialize(string text)
         {
             var complexIntervalDto = JsonSerializer.DeserializeFromString<ComplexRawIntervalDto>(text);

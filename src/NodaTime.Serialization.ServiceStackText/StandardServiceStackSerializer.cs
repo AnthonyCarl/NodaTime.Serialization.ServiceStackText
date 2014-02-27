@@ -17,6 +17,9 @@ namespace NodaTime.Serialization.ServiceStackText
 
         private readonly Action<T> _serializationValidator;
 
+        /// <summary>
+        /// <see cref="StandardServiceStackSerializer{T}"/> does not use the ServiceStack.Text raw serializer.
+        /// </summary>
         public bool UseRawSerializer
         {
             get { return false; }
@@ -46,6 +49,11 @@ namespace NodaTime.Serialization.ServiceStackText
             this._serviceStackFallbackDeSerializer = serviceStackFallbackDeSerializer;
         }
 
+        /// <summary>
+        /// Serializes the given object.
+        /// </summary>
+        /// <param name="value">The object to serialize.</param>
+        /// <returns>The serialized representation.</returns>
         public string Serialize(T value)
         {
             if (this._serializationValidator != null)
@@ -56,6 +64,11 @@ namespace NodaTime.Serialization.ServiceStackText
             return _pattern.Format(value);
         }
 
+        /// <summary>
+        /// Deserializes the given JSON.
+        /// </summary>
+        /// <param name="text">The JSON to parse.</param>
+        /// <returns>The deserialized object.</returns>
         public T Deserialize(string text)
         {
             var parsedResult = _pattern.Parse(text);

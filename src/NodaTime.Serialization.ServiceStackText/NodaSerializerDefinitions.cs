@@ -11,12 +11,12 @@ namespace NodaTime.Serialization.ServiceStackText
     {
         /// <summary>
         /// Converter for <see cref="Interval"/>. This uses the same <see cref="Instant"/> serializer as the default Instant Serializer.
-        /// </summary
+        /// </summary>
         public static IServiceStackSerializer<Interval> ComplexIntervalSerializer = new ComplexJsonIntervalSerializer(CreateInstantSerializer());
 
         /// <summary>
         /// Converter for <see cref="Interval"/>. This uses the same <see cref="Instant"/> serializer as the default Instant Serializer.
-        /// </summary
+        /// </summary>
         public static IServiceStackSerializer<Interval> ExtendedIsoIntervalSerializer = new ExtendedIsoIntervalSerializer(CreateInstantSerializer());
 
         /// <summary>
