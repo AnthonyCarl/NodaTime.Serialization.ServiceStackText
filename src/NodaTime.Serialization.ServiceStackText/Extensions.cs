@@ -1,21 +1,35 @@
 ﻿using System;
+using System.Reflection;
 using ServiceStack.Text;
 
 namespace NodaTime.Serialization.ServiceStackText
 {
     /// <summary>
-    /// Useful extensions used to configure the ServiceStack.Text JSON serializer.
+    ///     Useful extensions used to configure the ServiceStack.Text JSON serializer.
     /// </summary>
     public static class Extensions
     {
         private static readonly object Mutex = new object();
+        private static MethodInfo _nullableSerializerMethodInfo;
+
+        private static MethodInfo NullableSerializerMethodInfo
+        {
+            get
+            {
+                return _nullableSerializerMethodInfo
+                       ?? (_nullableSerializerMethodInfo =
+                           typeof (Extensions).GetMethod(
+                               "ConfigureNullableSerializer",
+                               BindingFlags.NonPublic | BindingFlags.Static));
+            }
+        }
 
         /// <summary>
         ///     Used for fluent setting of serializerSettings. Nothing is done if the serializer or config action is null.
         /// </summary>
         /// <param name="serializerSettings">The serializer to perform the action on.</param>
         /// <param name="configAction">The configuration action to perform on the serializerSettings.</param>
-        /// <returns>The original <param ref="serializerSettings"/> value, for further chaining.</returns>
+        /// <returns>The original <param ref="serializerSettings" /> value, for further chaining.</returns>
         public static INodaSerializerSettings SetSerializer(
             this INodaSerializerSettings serializerSettings,
             Action<INodaSerializerSettings> configAction)
@@ -30,11 +44,12 @@ namespace NodaTime.Serialization.ServiceStackText
         }
 
         /// <summary>
-        /// Configures the given serializer settings to use <see cref="NodaSerializerDefinitions.ExtendedIsoIntervalSerializer"/>.
-        /// Any other converters which can convert <see cref="Interval"/> are removed from the serializer.
+        ///     Configures the given serializer settings to use
+        ///     <see cref="NodaSerializerDefinitions.ExtendedIsoIntervalSerializer" />.
+        ///     Any other converters which can convert <see cref="Interval" /> are removed from the serializer.
         /// </summary>
         /// <param name="serializerSettings">The existing serializer settings to add Noda Time serializerSettings to.</param>
-        /// <returns>The original <param ref="serializerSettings"/> value, for further chaining.</returns>
+        /// <returns>The original <param ref="serializerSettings" /> value, for further chaining.</returns>
         public static INodaSerializerSettings WithIsoIntervalSerializer(this INodaSerializerSettings serializerSettings)
         {
             serializerSettings.SetSerializer(
@@ -44,12 +59,14 @@ namespace NodaTime.Serialization.ServiceStackText
         }
 
         /// <summary>
-        /// Configures the given serializer settings to use <see cref="NodaSerializerDefinitions.NormalizingIsoPeriodSerializer"/>.
-        /// Any other converters which can convert <see cref="Period"/> are removed from the serializer.
+        ///     Configures the given serializer settings to use
+        ///     <see cref="NodaSerializerDefinitions.NormalizingIsoPeriodSerializer" />.
+        ///     Any other converters which can convert <see cref="Period" /> are removed from the serializer.
         /// </summary>
         /// <param name="serializerSettings">The existing serializer settings to add Noda Time serializerSettings to.</param>
-        /// <returns>The original <param ref="serializerSettings"/> value, for further chaining.</returns>
-        public static INodaSerializerSettings WithNormalizingIsoPeriodSerializer(this INodaSerializerSettings serializerSettings)
+        /// <returns>The original <param ref="serializerSettings" /> value, for further chaining.</returns>
+        public static INodaSerializerSettings WithNormalizingIsoPeriodSerializer(
+            this INodaSerializerSettings serializerSettings)
         {
             serializerSettings.SetSerializer(
                 x => x.PeriodSerializer = NodaSerializerDefinitions.NormalizingIsoPeriodSerializer);
@@ -58,7 +75,8 @@ namespace NodaTime.Serialization.ServiceStackText
         }
 
         /// <summary>
-        /// Configuration for ServiceStack.Text with everything required to properly serialize and deserialize NodaTime data types to and from json.
+        ///     Configuration for ServiceStack.Text with everything required to properly serialize and deserialize NodaTime data
+        ///     types to and from json.
         /// </summary>
         /// <param name="provider">The time zone provider to use when parsing time zones and zoned date/times.</param>
         /// <returns>A new Noda serializer settings.</returns>
@@ -72,7 +90,7 @@ namespace NodaTime.Serialization.ServiceStackText
         }
 
         /// <summary>
-        /// Configures the ServiceStack.Text json serializer.
+        ///     Configures the ServiceStack.Text json serializer.
         /// </summary>
         /// <param name="nodaSerializerSettings">The serializer settings to use.</param>
         public static void ConfigureSerializersForNodaTime(this INodaSerializerSettings nodaSerializerSettings)
@@ -96,7 +114,7 @@ namespace NodaTime.Serialization.ServiceStackText
         }
 
         /// <summary>
-        /// Configures the ServiceStack.Text json serializer.
+        ///     Configures the ServiceStack.Text json serializer.
         /// </summary>
         /// <param name="serializer">The individual serializer to configure.</param>
         public static void ConfigureSerializer<T>(this IServiceStackSerializer<T> serializer)
@@ -120,6 +138,31 @@ namespace NodaTime.Serialization.ServiceStackText
                     JsConfig<T>.SerializeFn = serializer.Serialize;
                     JsConfig<T>.DeSerializeFn = serializer.Deserialize;
                 }
+
+                var type = typeof (T);
+
+                if (type.IsValueType)
+                {
+                    //register nullable
+                    MethodInfo genericMethod = NullableSerializerMethodInfo.MakeGenericMethod(type);
+                    genericMethod.Invoke(serializer, new object[] {serializer});
+                }
+            }
+        }
+
+        private static void ConfigureNullableSerializer<T>(this IServiceStackSerializer<T> serializer) where T : struct
+        {
+            //ServiceStack.Text will never use the serialize / deserialize fn if the value is null 
+            //or the text is null or empty.
+            if (serializer.UseRawSerializer)
+            {
+                JsConfig<T?>.RawSerializeFn = arg => serializer.Serialize(arg.Value);
+                JsConfig<T?>.RawDeserializeFn = s => serializer.Deserialize(s);
+            }
+            else
+            {
+                JsConfig<T?>.SerializeFn = arg => serializer.Serialize(arg.Value);
+                JsConfig<T?>.DeSerializeFn = s => serializer.Deserialize(s);
             }
         }
     }

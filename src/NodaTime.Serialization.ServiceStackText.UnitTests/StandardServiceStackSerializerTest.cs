@@ -5,7 +5,7 @@ using Xunit;
 
 namespace NodaTime.Serialization.ServiceStackText.UnitTests
 {
-    public class StandardServiceStackSerializerTest
+    public class StandardServiceStackSerializerTests
     {
         [Fact]
         public void Constructor_NullPattern_ArgumentNullException()
