@@ -43,6 +43,7 @@ The `SerivceStack.Text` serializer uses the same default serialization formats a
 ##Notes
 - Serializer setup should only occur once in your application root.
 - Serialization setup should occur before any serialization occurs with `ServiceStack.Text` or there may be undesirable behavior.
+- For Value types, this will also setup the nullable serializer for that value type.
 
 ##Using the Code
 
