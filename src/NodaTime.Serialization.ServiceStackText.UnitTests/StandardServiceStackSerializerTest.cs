@@ -28,26 +28,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
             string json = "2012-01-02T03:04:05Z";
             AssertConversions(value, json,NodaSerializerDefinitions.InstantSerializer);
         }
-
-        //This test may not make a lot of sense for service stack. Service Stack pads the second fraction to 7 places.
-        [Fact]
-        public void InstantConverter_EquivalentToIsoDateTimeConverter()
-        {
-            var dateTime = new DateTime(2012, 1, 2, 3, 4, 5, DateTimeKind.Utc);
-            var instant = Instant.FromDateTimeUtc(dateTime);
-
-            using (var scope = JsConfig.BeginScope())
-            {
-                scope.DateHandler = JsonDateHandler.ISO8601;
-
-                var jsonDateTime = JsonSerializer.SerializeToString(dateTime);
-                var jsonInstant = NodaSerializerDefinitions.InstantSerializer.Serialize(instant);
-                Assert.True(jsonDateTime.Contains(jsonInstant.Substring(0,jsonInstant.IndexOf('Z'))));
-                Assert.True(jsonInstant.EndsWith("Z"));
-                Assert.True(jsonDateTime.EndsWith("Z\""));
-            }
-        }
-
+        
         [Fact]
         public void LocalDateConverter()
         {
@@ -70,24 +51,6 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
             var value = new LocalDateTime(2012, 1, 2, 3, 4, 5, 6, 7, CalendarSystem.Iso);
             var json = "2012-01-02T03:04:05.0060007";
             AssertConversions(value, json,NodaSerializerDefinitions.LocalDateTimeSerializer);
-        }
-
-        //This test may not make a lot of sense for service stack. Service Stack pads the second fraction to 7 places.
-        [Fact]
-        public void LocalDateTimeConverter_EquivalentToIsoDateTimeConverter()
-        {
-            var dateTime = new DateTime(2012, 1, 2, 3, 4, 5, 6, DateTimeKind.Unspecified);
-            var localDateTime = new LocalDateTime(2012, 1, 2, 3, 4, 5, 6, CalendarSystem.Iso);
-
-            using (var scope = JsConfig.BeginScope())
-            {
-                scope.DateHandler = JsonDateHandler.ISO8601;
-                
-                var jsonDateTime = JsonSerializer.SerializeToString(dateTime);
-                //The quotes are added by the Service Stack serializer, not by the Noda serializer (otherwise there would be double quotes)
-                var jsonLocalDateTime = NodaSerializerDefinitions.LocalDateTimeSerializer.Serialize(localDateTime);
-                Assert.True(jsonDateTime.Contains(jsonLocalDateTime));
-            }
         }
 
         [Fact]
