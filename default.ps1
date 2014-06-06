@@ -69,7 +69,7 @@ task Compile -depends Clean {
 }
 
 task TestSsTextV4 -depends Compile {
- mkdir -p "$ssTextV4TestOutputPath" -force
+ mkdir -path "$ssTextV4TestOutputPath" -force
  cp "$testOutputPath\*.*" "$ssTextV4TestOutputPath"
  cp "$ssTextv4Dll" "$ssTextV4TestOutputPath" -force
  exec { .$xunitRunner "$ssTextV4TestDllFullPath" }
@@ -116,7 +116,7 @@ task SetReleaseNotes -depends TestSsTextV4,Test {
 }
 
 task Pack -depends SetReleaseNotes {
-  mkdir -p "$nugetOutputDir" -force
+  mkdir -path "$nugetOutputDir" -force
 
   $completeVersionNumber = Get-VersionNumber
   exec { invoke-expression "& '$nugetExe' pack '$csprojFile' -Symbols -Properties Configuration=$configuration -OutputDirectory '$nugetOutputDir' $versionSwitch" }
