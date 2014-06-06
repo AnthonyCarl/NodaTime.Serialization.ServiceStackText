@@ -34,6 +34,9 @@
     <Reference Include="NodaTime">
       <HintPath>..\packages\NodaTime.1.2.0\lib\net35-Client\NodaTime.dll</HintPath>
     </Reference>
+    <Reference Include="NodaTime.Testing">
+      <HintPath>..\packages\NodaTime.Testing.1.2.0\lib\net35-Client\NodaTime.Testing.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Text">
       <HintPath>..\packages\ServiceStack.Text.3.9.44\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
@@ -47,6 +50,7 @@
     <Compile Include="ComplexJsonIntervalSerializerTests.cs" />
     <Compile Include="DateTimeZoneSerializerTests.cs" />
     <Compile Include="DefaultNodaSerializerSettingsTests.cs" />
+    <Compile Include="ToStringSerializerTests.cs" />
     <Compile Include="ExtendedIsoIntervalSerializerTests.cs" />
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

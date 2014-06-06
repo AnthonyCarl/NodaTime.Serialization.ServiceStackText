@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics.Eventing.Reader;
+using NodaTime.Text;
 
 namespace NodaTime.Serialization.ServiceStackText
 {
@@ -63,6 +65,11 @@ namespace NodaTime.Serialization.ServiceStackText
         public IServiceStackSerializer<ZonedDateTime> ZonedDateTimeSerializer { get; set; }
 
         /// <summary>
+        /// The <see cref="IDateTimeZoneProvider"/> in use.
+        /// </summary>
+        public IDateTimeZoneProvider Provider { get; set; }
+
+        /// <summary>
         /// Creates an instance of default serializers using the given <see cref="IDateTimeZoneProvider"/>.
         /// </summary>
         /// <param name="provider"></param>
@@ -84,6 +91,7 @@ namespace NodaTime.Serialization.ServiceStackText
             OffsetDateTimeSerializer = NodaSerializerDefinitions.OffsetDateTimeSerializer;
             PeriodSerializer = NodaSerializerDefinitions.RoundtripPeriodSerializer;
             ZonedDateTimeSerializer = NodaSerializerDefinitions.CreateZonedDateTimeSerializer(provider);
+            Provider = provider;
         }
     }
 }
