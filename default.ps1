@@ -32,7 +32,12 @@ properties {
     $projectBaseName = "NodaTime.Serialization.ServiceStackText"
     $csprojFile = "$srcRoot\$projectBaseName\$projectBaseName.csproj"
     $unitTestNamePart = "UnitTests"
-    $testDll = "$srcRoot\$projectBaseName.$unitTestNamePart\bin\$configuration\$projectBaseName.$unitTestNamePart.dll"
+    $testOutputPath = "$srcRoot\$projectBaseName.$unitTestNamePart\bin\$configuration"
+    $testDllFileName = "$projectBaseName.$unitTestNamePart.dll"
+    $testDllFullPath = "$testOutputPath\$testDllFileName"
+    $ssTextv4Dll = "$rootLocation\tools\ServiceStack.Text.4\lib\net40\ServiceStack.Text.dll"
+    $ssTextV4TestOutputPath = "$rootLocation\ssTextv4Test"
+    $ssTextV4TestDllFullPath = "$ssTextV4TestOutputPath\$testDllFileName"
     $slnFile = "$srcRoot\$projectBaseName.sln"
     $nuspecFile ="$srcRoot\$projectBaseName\$projectBaseName.nuspec"
     $framework = "3.5-Client"
@@ -63,11 +68,18 @@ task Compile -depends Clean {
   exec { msbuild "$slnFile" /p:Configuration=$configuration }
 }
 
-task Test -depends Compile {
-  exec { .$xunitRunner "$testDll" }
+task TestSsTextV4 -depends Compile {
+ mkdir -p "$ssTextV4TestOutputPath" -force
+ cp "$testOutputPath\*.*" "$ssTextV4TestOutputPath"
+ cp "$ssTextv4Dll" "$ssTextV4TestOutputPath" -force
+ exec { .$xunitRunner "$ssTextV4TestDllFullPath" }
 }
 
-task SetReleaseNotes -depends Test {
+task Test -depends Compile {
+  exec { .$xunitRunner "$testDllFullPath" }
+}
+
+task SetReleaseNotes -depends TestSsTextV4,Test {
   $releaseNotesText = $Env:ReleaseNotes
   $vcsNumber = $Env:BUILD_VCS_NUMBER
 

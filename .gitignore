@@ -4,3 +4,4 @@
 /src/NodaTime.Serialization.ServiceStackText.UnitTests/bin
 /src/NodaTime.Serialization.ServiceStackText.UnitTests/obj
 /src/*.suo
+/ssTextv4Test
