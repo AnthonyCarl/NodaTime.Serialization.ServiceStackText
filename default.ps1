@@ -104,7 +104,7 @@ task SetReleaseNotes -depends Test {
 }
 
 task Pack -depends SetReleaseNotes {
-  mkdir -p "$nugetOutputDir" -force
+  mkdir -path "$nugetOutputDir" -force
 
   $completeVersionNumber = Get-VersionNumber
   exec { invoke-expression "& '$nugetExe' pack '$csprojFile' -Symbols -Properties Configuration=$configuration -OutputDirectory '$nugetOutputDir' $versionSwitch" }
