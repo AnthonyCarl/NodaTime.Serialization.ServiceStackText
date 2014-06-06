@@ -1,7 +1,7 @@
 NodaTime.Serialization.ServiceStackText
 =======================================
 
-[`ServiceStack.Text`](https://github.com/ServiceStack/ServiceStack.Text) JSON serialization support for [`NodaTime`](http://nodatime.org/). This library will work with `v3.9.44` and later versions of `v3.9.x`. It _should_ work with `v4.0.x` 
+[`ServiceStack.Text`](https://github.com/ServiceStack/ServiceStack.Text) JSON serialization support for [`NodaTime`](http://nodatime.org/). This library will work with `v3.9.44` and later versions of `ServiceStack.Text` (including  `v4.0.x`).
 
 ##Typical Setup
 ```cs 
@@ -44,6 +44,8 @@ The `SerivceStack.Text` serializer uses the same default serialization formats a
 - Serializer setup should only occur once in your application root.
 - Serialization setup should occur before any serialization occurs with `ServiceStack.Text` or there may be undesirable behavior.
 - For Value types, this will also setup the nullable serializer for that value type.
+- Since this is a custom serializer for `ServiceStack.Text`, calls to `JsConfig.Reset()` will remove the custom serializers.
+- `v4.0.x` compatibility is verified by running the same unit test assembly against the same serializer assembly with the `ServiceStack.Text` `v3.9.44` assembly over written with a `v4.0.21` assembly.
 
 ##Using the Code
 
@@ -56,7 +58,7 @@ The `SerivceStack.Text` serializer uses the same default serialization formats a
  
   
 ##Continuous Integration
-[CodeBetter.com CI Build Status:](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt1209) ![Build Status](http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt1209)/statusIcon)
+[CodeBetter.com CI Build Status:](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt1209&guest=1) ![Build Status](http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt1209)/statusIcon)
 
 ![CodeBetter CI](http://www.jetbrains.com/img/banners/Codebetter.png)
 
