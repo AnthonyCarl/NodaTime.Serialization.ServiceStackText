@@ -49,5 +49,9 @@ namespace NodaTime.Serialization.ServiceStackText
         /// The <see cref="ZonedDateTime"/> ServiceStack.Text JSON serializer to use.
         /// </summary>
         IServiceStackSerializer<ZonedDateTime> ZonedDateTimeSerializer { get; set; }
+        /// <summary>
+        /// The <see cref="IDateTimeZoneProvider"/> in use.
+        /// </summary>
+        IDateTimeZoneProvider Provider { get; set; }
     }
 }

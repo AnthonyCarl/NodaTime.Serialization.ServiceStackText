@@ -65,16 +65,18 @@ namespace NodaTime.Serialization.ServiceStackText
         /// Creates a serializer for zoned date/times, using the given <see cref="IDateTimeZoneProvider"/>.
         /// </summary>
         /// <param name="provider">The <see cref="IDateTimeZoneProvider"/> to use when parsing.</param>
+        /// <param name="pattern"></param>
         /// <returns>A serializer to handle <see cref="ZonedDateTime"/>.</returns>
-        public static IServiceStackSerializer<ZonedDateTime> CreateZonedDateTimeSerializer(IDateTimeZoneProvider provider)
+        public static IServiceStackSerializer<ZonedDateTime> CreateZonedDateTimeSerializer(IDateTimeZoneProvider provider, string pattern = "yyyy'-'MM'-'dd'T'HH':'mm':'ss;FFFFFFFo<G> z")
         {
-            return
-                new StandardServiceStackSerializer<ZonedDateTime>(
-                    ZonedDateTimePattern.CreateWithInvariantCulture(
-                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss;FFFFFFFo<G> z",
-                        provider),
-                    ServiceStackFallbackDeserializers.ToZonedDateTime,
-                    CreateIsoValidator<ZonedDateTime>(x => x.Calendar));
+            if (pattern == null)
+            {
+                throw new ArgumentNullException("pattern");
+            }
+            return new StandardServiceStackSerializer<ZonedDateTime>(
+                ZonedDateTimePattern.CreateWithInvariantCulture(pattern, provider),
+                ServiceStackFallbackDeserializers.ToZonedDateTime,
+                CreateIsoValidator<ZonedDateTime>(x => x.Calendar));
         }
 
         /// <summary>

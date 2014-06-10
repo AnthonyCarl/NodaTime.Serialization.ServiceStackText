@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using NodaTime.Text;
 using ServiceStack.Text;
 
 namespace NodaTime.Serialization.ServiceStackText
@@ -70,6 +71,23 @@ namespace NodaTime.Serialization.ServiceStackText
         {
             serializerSettings.SetSerializer(
                 x => x.PeriodSerializer = NodaSerializerDefinitions.NormalizingIsoPeriodSerializer);
+
+            return serializerSettings;
+        }
+
+        /// <summary>
+        ///     Configures the <see cref="ZonedDateTime" /> serializer to use a format compatible 
+        ///     with the ToString method. 
+        /// </summary>
+        /// <param name="serializerSettings">The existing serializer settings to add Noda Time serializerSettings to.</param>
+        /// <returns>The original <param ref="serializerSettings" /> value, for further chaining.</returns>
+        public static INodaSerializerSettings WithGeneralIsoZonedDateTimeSerializer(
+            this INodaSerializerSettings serializerSettings)
+        {
+            serializerSettings.SetSerializer(
+                x => x.ZonedDateTimeSerializer =
+                    NodaSerializerDefinitions.CreateZonedDateTimeSerializer(x.Provider,
+                        ZonedDateTimePattern.GeneralFormatOnlyIsoPattern.PatternText));
 
             return serializerSettings;
         }

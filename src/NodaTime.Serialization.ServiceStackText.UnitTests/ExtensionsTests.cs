@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using NodaTime.Testing;
 using ServiceStack.Text;
 using Xunit;
 
@@ -185,6 +186,34 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
             var end = Instant.FromUtc(2014, 2, 21, 21, 2);
             var text = JsonSerializer.SerializeToString<Interval?>(new Interval(start, end));
             Assert.Equal("{\"Start\":\"2014-02-21T02:21:00Z\",\"End\":\"2014-02-21T21:02:00Z\"}", text);
+        }
+
+        [Fact]
+        public void WithGeneralIsoZonedDateTimeSerializer_Serialize()
+        {
+            var clock = FakeClock.FromUtc(2014, 05, 02, 10, 30, 45);
+            var now = clock.Now.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
+            var serialisers = new DefaultNodaSerializerSettings(DateTimeZoneProviders.Tzdb)
+                .WithGeneralIsoZonedDateTimeSerializer();
+
+            var expected = now.ToString();
+            var actual = serialisers.ZonedDateTimeSerializer.Serialize(now);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void WithGeneralIsoZonedDateTimeSerializer_Deserialize()
+        {
+            var clock = FakeClock.FromUtc(2014, 05, 02, 10, 30, 45);
+            var now = clock.Now.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
+            var serialisers = new DefaultNodaSerializerSettings(DateTimeZoneProviders.Tzdb)
+                .WithGeneralIsoZonedDateTimeSerializer();
+
+            var expected = now;
+            var actual = serialisers.ZonedDateTimeSerializer.Deserialize(now.ToString());
+
+            Assert.Equal(expected, actual);
         }
 
         private void AssertSerializeAndDeserializeFunctions<T>(IServiceStackSerializer<T> serializer)
