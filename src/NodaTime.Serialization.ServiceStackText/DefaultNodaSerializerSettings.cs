@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics.Eventing.Reader;
-using NodaTime.Text;
 
 namespace NodaTime.Serialization.ServiceStackText
 {
