@@ -81,7 +81,7 @@ namespace NodaTime.Serialization.ServiceStackText
         /// </summary>
         /// <param name="serializerSettings">The existing serializer settings to add Noda Time serializerSettings to.</param>
         /// <returns>The original <param ref="serializerSettings" /> value, for further chaining.</returns>
-        public static INodaSerializerSettings WithToStringZonedDateTimeSerializer(
+        public static INodaSerializerSettings WithGeneralIsoZonedDateTimeSerializer(
             this INodaSerializerSettings serializerSettings)
         {
             serializerSettings.SetSerializer(
