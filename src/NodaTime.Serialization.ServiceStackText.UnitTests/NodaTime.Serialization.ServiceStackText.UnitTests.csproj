@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NodaTime.Serialization.ServiceStackText.UnitTests</RootNamespace>
     <AssemblyName>NodaTime.Serialization.ServiceStackText.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
@@ -40,6 +40,7 @@
     <Reference Include="ServiceStack.Text">
       <HintPath>..\packages\ServiceStack.Text.3.9.44\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="xunit">
@@ -52,6 +53,7 @@
     <Compile Include="DefaultNodaSerializerSettingsTests.cs" />
     <Compile Include="ExtendedIsoIntervalSerializerTests.cs" />
     <Compile Include="ExtensionsTests.cs" />
+    <Compile Include="NodaSerializerDefinitionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceStackFallbackDeserializersTests.cs" />
     <Compile Include="StandardServiceStackSerializerTest.cs" />

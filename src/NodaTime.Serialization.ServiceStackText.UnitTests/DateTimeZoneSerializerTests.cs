@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using NodaTime.TimeZones;
 using Xunit;
 
 namespace NodaTime.Serialization.ServiceStackText.UnitTests
 {
+    [ExcludeFromCodeCoverage]
     public class DateTimeZoneSerializerTests
     {
         private readonly IServiceStackSerializer<DateTimeZone> serializer = NodaSerializerDefinitions.CreateDateTimeZoneSerializer(DateTimeZoneProviders.Tzdb);

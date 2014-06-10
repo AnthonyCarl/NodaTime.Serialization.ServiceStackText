@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using NodaTime.Utility;
 using Xunit;
 
 namespace NodaTime.Serialization.ServiceStackText.UnitTests
 {
+    [ExcludeFromCodeCoverage]
     public class ComplexJsonIntervalSerializerTests
     {
         [Fact]

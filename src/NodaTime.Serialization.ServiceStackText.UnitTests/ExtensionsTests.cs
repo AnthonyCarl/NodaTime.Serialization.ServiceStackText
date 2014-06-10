@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using NodaTime.Testing;
 using ServiceStack.Text;
@@ -6,6 +7,7 @@ using Xunit;
 
 namespace NodaTime.Serialization.ServiceStackText.UnitTests
 {
+    [ExcludeFromCodeCoverage]
     public class ExtensionsTests
     {
         public ExtensionsTests()
