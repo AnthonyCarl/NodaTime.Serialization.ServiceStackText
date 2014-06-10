@@ -50,7 +50,6 @@
     <Compile Include="ComplexJsonIntervalSerializerTests.cs" />
     <Compile Include="DateTimeZoneSerializerTests.cs" />
     <Compile Include="DefaultNodaSerializerSettingsTests.cs" />
-    <Compile Include="ToStringSerializerTests.cs" />
     <Compile Include="ExtendedIsoIntervalSerializerTests.cs" />
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
