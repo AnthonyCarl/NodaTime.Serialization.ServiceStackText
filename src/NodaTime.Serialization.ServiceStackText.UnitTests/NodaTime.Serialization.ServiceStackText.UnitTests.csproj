@@ -53,6 +53,7 @@
     <Compile Include="DefaultNodaSerializerSettingsTests.cs" />
     <Compile Include="ExtendedIsoIntervalSerializerTests.cs" />
     <Compile Include="ExtensionsTests.cs" />
+    <Compile Include="JsConfigWrapperTests.cs" />
     <Compile Include="NodaSerializerDefinitionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceStackFallbackDeserializersTests.cs" />

@@ -223,7 +223,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
             Func<T, string> serializationFunc = serializer.Serialize;
             Func<string, T> deserializationFunc = serializer.Deserialize;
             Assert.Same(JsConfig<T>.SerializeFn.Target, serializationFunc.Target);
-            Assert.Same(JsConfig<T>.DeSerializeFn.Target, deserializationFunc.Target);
+            Assert.Same(GetDeserializerTarget<T>(), deserializationFunc.Target);
         }
 
         private void AssertRawSerializeAndDeserializeFunctions<T>(IServiceStackSerializer<T> serializer)
@@ -231,7 +231,34 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
             Func<T, string> serializationFunc = serializer.Serialize;
             Func<string, T> deserializationFunc = serializer.Deserialize;
             Assert.Same(JsConfig<T>.RawSerializeFn.Target, serializationFunc.Target);
-            Assert.Same(JsConfig<T>.RawDeserializeFn.Target, deserializationFunc.Target);
+            Assert.Same(GetRawDeserializerTarget<T>(), deserializationFunc.Target);
+        }
+
+        private static object GetDeserializerTarget<T>()
+        {
+            return GetDeserializerTarget<T>("DeSerializeFn");
+        }
+
+        private static object GetRawDeserializerTarget<T>()
+        {
+            return GetDeserializerTarget<T>("RawDeserializeFn");
+        }
+
+        private static object GetDeserializerTarget<T>(string name)
+        {
+            var field = typeof(JsConfig<T>).GetField(name);
+            object value;
+            if (field != null)
+            {
+                value = field.GetValue(null);
+            }
+            else
+            {
+                var property = typeof(JsConfig<T>).GetProperty(name);
+                value = property.GetValue(null, null);
+            }
+
+            return ((Func<string, T>)value).Target;
         }
     }
 }

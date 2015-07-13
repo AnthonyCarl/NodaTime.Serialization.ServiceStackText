@@ -50,6 +50,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="INodaSerializerSettings.cs" />
     <Compile Include="IServiceStackSerializer.cs" />
+    <Compile Include="JsConfigWrapper.cs" />
     <Compile Include="NodaSerializerDefinitions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceStackFallbackDeserializers.cs" />

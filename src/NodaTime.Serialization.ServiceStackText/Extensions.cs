@@ -111,6 +111,9 @@ namespace NodaTime.Serialization.ServiceStackText
         ///     Configures the ServiceStack.Text json serializer.
         /// </summary>
         /// <param name="nodaSerializerSettings">The serializer settings to use.</param>
+        /// <exception cref="MemberAccessException">
+        /// Unable to find the deserializer property or field member on the ServiceStack.Text serializer.
+        /// </exception>
         public static void ConfigureSerializersForNodaTime(this INodaSerializerSettings nodaSerializerSettings)
         {
             if (nodaSerializerSettings == null)
@@ -135,6 +138,9 @@ namespace NodaTime.Serialization.ServiceStackText
         ///     Configures the ServiceStack.Text json serializer.
         /// </summary>
         /// <param name="serializer">The individual serializer to configure.</param>
+        /// <exception cref="MemberAccessException">
+        /// Unable to find the deserializer property or field member on the ServiceStack.Text serializer.
+        /// </exception>
         public static void ConfigureSerializer<T>(this IServiceStackSerializer<T> serializer)
         {
             if (serializer == null)
@@ -149,12 +155,12 @@ namespace NodaTime.Serialization.ServiceStackText
                 if (serializer.UseRawSerializer)
                 {
                     JsConfig<T>.RawSerializeFn = serializer.Serialize;
-                    JsConfig<T>.RawDeserializeFn = serializer.Deserialize;
+                    JsConfigWrapper<T>.SetRawDeserializerMember(serializer.Deserialize);
                 }
                 else
                 {
                     JsConfig<T>.SerializeFn = serializer.Serialize;
-                    JsConfig<T>.DeSerializeFn = serializer.Deserialize;
+                    JsConfigWrapper<T>.SetDeserializerMember(serializer.Deserialize);
                 }
 
                 var type = typeof (T);
@@ -162,7 +168,7 @@ namespace NodaTime.Serialization.ServiceStackText
                 if (type.IsValueType)
                 {
                     //register nullable
-                    MethodInfo genericMethod = NullableSerializerMethodInfo.MakeGenericMethod(type);
+                    var genericMethod = NullableSerializerMethodInfo.MakeGenericMethod(type);
                     genericMethod.Invoke(serializer, new object[] {serializer});
                 }
             }
@@ -175,12 +181,12 @@ namespace NodaTime.Serialization.ServiceStackText
             if (serializer.UseRawSerializer)
             {
                 JsConfig<T?>.RawSerializeFn = arg => serializer.Serialize(arg.Value);
-                JsConfig<T?>.RawDeserializeFn = s => serializer.Deserialize(s);
+                JsConfigWrapper<T?>.SetRawDeserializerMember(s => serializer.Deserialize(s));
             }
             else
             {
                 JsConfig<T?>.SerializeFn = arg => serializer.Serialize(arg.Value);
-                JsConfig<T?>.DeSerializeFn = s => serializer.Deserialize(s);
+                JsConfigWrapper<T?>.SetDeserializerMember(s => serializer.Deserialize(s));
             }
         }
     }

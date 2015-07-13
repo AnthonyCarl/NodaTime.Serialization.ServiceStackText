@@ -5,3 +5,5 @@
 /src/NodaTime.Serialization.ServiceStackText.UnitTests/obj
 /src/*.suo
 /ssTextv4Test
+/src/*.user
+/ReleasePackages
