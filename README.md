@@ -61,6 +61,4 @@ The `SerivceStack.Text` serializer uses the same default serialization formats a
 ##Continuous Integration
 [CodeBetter.com CI Build Status:](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt1209&guest=1) ![Build Status](http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt1209)/statusIcon)
 
-![CodeBetter CI](http://www.jetbrains.com/img/banners/Codebetter.png)
-
 Special Thanks to [JetBrains](http://www.jetbrains.com/teamcity) and [CodeBetter](http://codebetter.com/codebetter-ci/) for hosting this project!
