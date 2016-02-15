@@ -43,6 +43,7 @@ The `SerivceStack.Text` serializer uses the same default serialization formats a
 ##Notes
 - Serializer setup should only occur once in your application root.
 - Serialization setup should occur before any serialization occurs with `ServiceStack.Text` or there may be undesirable behavior.
+- If using with ServiceStack, serializer setup should occur before Init of the AppHost.
 - For Value types, this will also setup the nullable serializer for that value type.
 - Since this is a custom serializer for `ServiceStack.Text`, calls to `JsConfig.Reset()` will remove the custom serializers.
 - `v3.9.x` & `v4.0.x` compatibility is verified by running the same unit test assembly against the same serializer assembly twice - once with a `v3.9.44` and again with a `v4.0.42` `ServiceStack.Text` assembly.
