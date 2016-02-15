@@ -33,7 +33,7 @@ DateTimeZoneProviders.Tzdb.CreateDefaultSerializersForNodaTime()
 NodaSerializerDefinitions.LocalTimeSerializer.ConfigureSerializer();
 ```
 
-Alternatively, you can create your own implementation of `INodaSerializerSettings` to suit your specific needs.
+Alternatively, you can create your own implementation of [`INodaSerializerSettings`](https://github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText/blob/master/src/NodaTime.Serialization.ServiceStackText/INodaSerializerSettings.cs) to suit your specific needs.
 
 ##Default Serializers
 The `SerivceStack.Text` serializer uses the same default serialization formats as those used in the [`Json.NET` serializers](http://nodatime.org/1.2.x/userguide/serialization.html). You can optionally change the `Interval` serializer to use the [`ISO 8601` Interval spec](http://en.wikipedia.org/wiki/ISO_8601#Time_intervals).
