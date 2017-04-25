@@ -8,12 +8,12 @@ namespace NodaTime.Serialization.ServiceStackText
     {
         public static void SetDeserializerMember(Func<string, T> deserializeFunc)
         {
-            SetDeserializerMemberByName("DeSerializeFn", deserializeFunc);
+            SetDeserializerMemberByName(nameof(JsConfig<T>.DeSerializeFn), deserializeFunc);
         }
 
         public static void SetRawDeserializerMember(Func<string, T> deserializeFunc)
         {
-            SetDeserializerMemberByName("RawDeserializeFn", deserializeFunc);
+            SetDeserializerMemberByName(nameof(JsConfig<T>.RawDeserializeFn), deserializeFunc);
         }
 
         public static void SetDeserializerMemberByName(string memberName, Func<string, T> deserializeFunc)
@@ -31,7 +31,7 @@ namespace NodaTime.Serialization.ServiceStackText
 
         private static Action<Func<string, T>> GetFieldOrNull(string fieldName)
         {
-            var field = typeof(JsConfig<T>).GetTypeInfo().GetDeclaredField(fieldName);
+            var field = typeof(JsConfig<T>).GetFieldInfo(fieldName);
             if (field == null)
             {
                 return null;

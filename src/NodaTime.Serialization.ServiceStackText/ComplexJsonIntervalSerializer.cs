@@ -30,7 +30,7 @@ namespace NodaTime.Serialization.ServiceStackText
         {
             if (instantSerializer == null)
             {
-                throw new ArgumentNullException("instantSerializer");
+                throw new ArgumentNullException(nameof(instantSerializer));
             }
             this._instantSerializer = instantSerializer;
         }

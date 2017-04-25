@@ -235,17 +235,17 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
 
         private static object GetDeserializerTarget<T>()
         {
-            return GetDeserializerTarget<T>("DeSerializeFn");
+            return GetDeserializerTarget<T>(nameof(JsConfig<T>.DeSerializeFn));
         }
 
         private static object GetRawDeserializerTarget<T>()
         {
-            return GetDeserializerTarget<T>("RawDeserializeFn");
+            return GetDeserializerTarget<T>(nameof(JsConfig<T>.RawDeserializeFn));
         }
 
         private static object GetDeserializerTarget<T>(string name)
         {
-            var field = typeof(JsConfig<T>).GetTypeInfo().GetDeclaredField(name);
+            var field = typeof(JsConfig<T>).GetFieldInfo(name);
             object value;
             if (field != null)
             {
