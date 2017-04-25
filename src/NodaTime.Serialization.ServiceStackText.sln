@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodaTime.Serialization.ServiceStackText", "NodaTime.Serialization.ServiceStackText\NodaTime.Serialization.ServiceStackText.csproj", "{59C59038-57F2-4CC8-9756-6EB05098C0A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodaTime.Serialization.ServiceStackText", "NodaTime.Serialization.ServiceStackText\NodaTime.Serialization.ServiceStackText.csproj", "{85C67FEF-0293-49C6-A34A-AB492C750226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodaTime.Serialization.ServiceStackText.UnitTests", "NodaTime.Serialization.ServiceStackText.UnitTests\NodaTime.Serialization.ServiceStackText.UnitTests.csproj", "{23D75243-B40A-4301-8B58-80253E58F3BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodaTime.Serialization.ServiceStackText.UnitTests", "NodaTime.Serialization.ServiceStackText.UnitTests\NodaTime.Serialization.ServiceStackText.UnitTests.csproj", "{05DECB1D-FDCB-4835-B6D5-F4CE51145263}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{59C59038-57F2-4CC8-9756-6EB05098C0A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59C59038-57F2-4CC8-9756-6EB05098C0A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59C59038-57F2-4CC8-9756-6EB05098C0A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59C59038-57F2-4CC8-9756-6EB05098C0A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23D75243-B40A-4301-8B58-80253E58F3BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23D75243-B40A-4301-8B58-80253E58F3BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23D75243-B40A-4301-8B58-80253E58F3BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23D75243-B40A-4301-8B58-80253E58F3BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85C67FEF-0293-49C6-A34A-AB492C750226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85C67FEF-0293-49C6-A34A-AB492C750226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85C67FEF-0293-49C6-A34A-AB492C750226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85C67FEF-0293-49C6-A34A-AB492C750226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05DECB1D-FDCB-4835-B6D5-F4CE51145263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DECB1D-FDCB-4835-B6D5-F4CE51145263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05DECB1D-FDCB-4835-B6D5-F4CE51145263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05DECB1D-FDCB-4835-B6D5-F4CE51145263}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

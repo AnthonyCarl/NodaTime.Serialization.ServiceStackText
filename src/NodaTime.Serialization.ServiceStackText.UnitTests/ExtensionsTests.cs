@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using NodaTime.Testing;
+using ServiceStack;
 using ServiceStack.Text;
 using Xunit;
 
 namespace NodaTime.Serialization.ServiceStackText.UnitTests
 {
-    [ExcludeFromCodeCoverage]
     public class ExtensionsTests
     {
         public ExtensionsTests()
@@ -246,7 +245,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
 
         private static object GetDeserializerTarget<T>(string name)
         {
-            var field = typeof(JsConfig<T>).GetField(name);
+            var field = typeof(JsConfig<T>).GetTypeInfo().GetDeclaredField(name);
             object value;
             if (field != null)
             {

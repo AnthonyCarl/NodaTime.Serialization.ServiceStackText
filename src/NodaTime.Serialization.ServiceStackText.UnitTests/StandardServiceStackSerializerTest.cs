@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using NodaTime.Text;
 using Xunit;
 
 namespace NodaTime.Serialization.ServiceStackText.UnitTests
 {
-    [ExcludeFromCodeCoverage]
     public class StandardServiceStackSerializerTests
     {
         [Fact]

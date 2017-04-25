@@ -19,9 +19,8 @@ namespace NodaTime.Serialization.ServiceStackText
             {
                 return _nullableSerializerMethodInfo
                        ?? (_nullableSerializerMethodInfo =
-                           typeof (Extensions).GetMethod(
-                               "ConfigureNullableSerializer",
-                               BindingFlags.NonPublic | BindingFlags.Static));
+                           typeof(Extensions).GetTypeInfo().GetDeclaredMethod(nameof(ConfigureNullableSerializer)));
+                               //BindingFlags.NonPublic | BindingFlags.Static));
             }
         }
 
@@ -102,7 +101,7 @@ namespace NodaTime.Serialization.ServiceStackText
         {
             if (provider == null)
             {
-                throw new ArgumentNullException("provider");
+                throw new ArgumentNullException(nameof(provider));
             }
             return new DefaultNodaSerializerSettings(provider);
         }
@@ -165,7 +164,7 @@ namespace NodaTime.Serialization.ServiceStackText
 
                 var type = typeof (T);
 
-                if (type.IsValueType)
+                if (type.GetTypeInfo().IsValueType)
                 {
                     //register nullable
                     var genericMethod = NullableSerializerMethodInfo.MakeGenericMethod(type);

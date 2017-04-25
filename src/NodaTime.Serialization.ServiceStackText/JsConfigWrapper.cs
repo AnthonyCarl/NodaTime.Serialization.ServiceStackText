@@ -1,4 +1,5 @@
 using System;
+using ServiceStack;
 using ServiceStack.Text;
 
 namespace NodaTime.Serialization.ServiceStackText
@@ -30,7 +31,7 @@ namespace NodaTime.Serialization.ServiceStackText
 
         private static Action<Func<string, T>> GetFieldOrNull(string fieldName)
         {
-            var field = typeof(JsConfig<T>).GetField(fieldName);
+            var field = typeof(JsConfig<T>).GetTypeInfo().GetDeclaredField(fieldName);
             if (field == null)
             {
                 return null;
@@ -45,7 +46,7 @@ namespace NodaTime.Serialization.ServiceStackText
             {
                 return null;
             }
-            return x => property.GetSetMethod().Invoke(null, new object[] { x });
+            return x => property.SetValue(null, x);
         }
     }
 }
