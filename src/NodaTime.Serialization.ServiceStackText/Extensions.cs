@@ -87,7 +87,7 @@ namespace NodaTime.Serialization.ServiceStackText
             serializerSettings.SetSerializer(
                 x => x.ZonedDateTimeSerializer =
                     NodaSerializerDefinitions.CreateZonedDateTimeSerializer(x.Provider,
-                        ZonedDateTimePattern.GeneralFormatOnlyIsoPattern.PatternText));
+                        ZonedDateTimePattern.GeneralFormatOnlyIso.PatternText));
 
             return serializerSettings;
         }

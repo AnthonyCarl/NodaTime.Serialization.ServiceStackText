@@ -41,7 +41,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         [Fact]
         public void LocalDateConverter_SerializeNonIso_Throws()
         {
-            var localDate = new LocalDate(2012, 1, 2, CalendarSystem.GetCopticCalendar(4));
+            var localDate = new LocalDate(2012, 1, 2, CalendarSystem.Coptic);//.GetCopticCalendar(4));
 
             Assert.Throws<ArgumentException>(() => NodaSerializerDefinitions.LocalDateSerializer.Serialize(localDate));
         }
@@ -49,15 +49,15 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         [Fact]
         public void LocalDateTimeConverter()
         {
-            var value = new LocalDateTime(2012, 1, 2, 3, 4, 5, 6, 7, CalendarSystem.Iso);
-            var json = "2012-01-02T03:04:05.0060007";
+            var value = new LocalDateTime(2012, 1, 2, 3, 4, 5, 6, CalendarSystem.Iso);
+            var json = "2012-01-02T03:04:05.006";
             AssertConversions(value, json,NodaSerializerDefinitions.LocalDateTimeSerializer);
         }
 
         [Fact]
         public void Deserialize_NoFallback_Throws()
         {
-            var serviceStackSerializer = new StandardServiceStackSerializer<LocalDate>(LocalDatePattern.IsoPattern);
+            var serviceStackSerializer = new StandardServiceStackSerializer<LocalDate>(LocalDatePattern.Iso);
             Assert.Throws<UnparsableValueException>(() => serviceStackSerializer.Deserialize("Invalid"));
         }
 
@@ -72,21 +72,21 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         [Fact]
         public void Deserialize_NoFallbackPoorlyFormedText_Throws()
         {
-            var serializer = new StandardServiceStackSerializer<LocalDate>(LocalDatePattern.IsoPattern);
+            var serializer = new StandardServiceStackSerializer<LocalDate>(LocalDatePattern.Iso);
             Assert.Throws<UnparsableValueException>(() => serializer.Deserialize("2014/1/2"));
         }
 
         [Fact]
         public void UseRawSerializer_StandardSerializer_False()
         {
-            var serializer = new StandardServiceStackSerializer<LocalDate>(LocalDatePattern.IsoPattern);
+            var serializer = new StandardServiceStackSerializer<LocalDate>(LocalDatePattern.Iso);
             Assert.False(serializer.UseRawSerializer);
         }
 
         [Fact]
         public void LocalDateTimeConverter_SerializeNonIso_Throws()
         {
-            var localDateTime = new LocalDateTime(2012, 1, 2, 3, 4, 5, CalendarSystem.GetCopticCalendar(4));
+            var localDateTime = new LocalDateTime(2012, 1, 2, 3, 4, 5, CalendarSystem.Coptic);//.GetCopticCalendar(4));
 
             Assert.Throws<ArgumentException>(
                 () => NodaSerializerDefinitions.LocalDateTimeSerializer.Serialize(localDateTime));
@@ -95,8 +95,8 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         [Fact]
         public void LocalTimeConverter()
         {
-            var value = new LocalTime(1, 2, 3, 4, 5);
-            var json = "01:02:03.0040005";
+            var value = new LocalTime(1, 2, 3, 4);
+            var json = "01:02:03.004";
             AssertConversions(value, json,NodaSerializerDefinitions.LocalTimeSerializer);
         }
 
@@ -146,8 +146,8 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         [Fact]
         public void OffsetDateTimeConverter()
         {
-            var value = new LocalDateTime(2012, 1, 2, 3, 4, 5, 6, 7).WithOffset(Offset.FromHoursAndMinutes(-1, -30) + Offset.FromMilliseconds(-1234));
-            string json = "2012-01-02T03:04:05.0060007-01:30:01.234";
+            var value = new LocalDateTime(2012, 1, 2, 3, 4, 5, 6).WithOffset(Offset.FromHoursAndMinutes(-1, -30) + Offset.FromMilliseconds(-1234));
+            string json = "2012-01-02T03:04:05.006-01:30:01";
             AssertConversions(value, json, NodaSerializerDefinitions.OffsetDateTimeSerializer);
         }
 

@@ -70,14 +70,14 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         public void ConfigureSerializersForNodaTime_NullSettings_NoException()
         {
             INodaSerializerSettings settings = null;
-            Assert.DoesNotThrow(settings.ConfigureSerializersForNodaTime);
+            settings.ConfigureSerializersForNodaTime();
         }
 
         [Fact]
         public void ConfigureSerializer_Nullserializer_NoException()
         {
             IServiceStackSerializer<LocalDate> serializer = null;
-            Assert.DoesNotThrow(serializer.ConfigureSerializer);
+            serializer.ConfigureSerializer();
         }
 
         [Fact]
@@ -194,7 +194,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         public void WithGeneralIsoZonedDateTimeSerializer_Serialize()
         {
             var clock = FakeClock.FromUtc(2014, 05, 02, 10, 30, 45);
-            var now = clock.Now.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
+            var now = clock.GetCurrentInstant().InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
             var serialisers = new DefaultNodaSerializerSettings(DateTimeZoneProviders.Tzdb)
                 .WithGeneralIsoZonedDateTimeSerializer();
 
@@ -208,7 +208,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         public void WithGeneralIsoZonedDateTimeSerializer_Deserialize()
         {
             var clock = FakeClock.FromUtc(2014, 05, 02, 10, 30, 45);
-            var now = clock.Now.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
+            var now = clock.GetCurrentInstant().InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
             var serialisers = new DefaultNodaSerializerSettings(DateTimeZoneProviders.Tzdb)
                 .WithGeneralIsoZonedDateTimeSerializer();
 
