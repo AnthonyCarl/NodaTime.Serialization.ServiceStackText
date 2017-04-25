@@ -1,5 +1,4 @@
 #tool "nuget:?package=JetBrains.dotCover.CommandLineTools"
-#tool "nuget:?package=xunit.runner.console"
 
 var target = Argument("target", "Default");
 var buildConfiguration = Argument("configuration", "Release");
@@ -53,13 +52,18 @@ Task("Test")
   .IsDependentOn("Build")
   .Does(() =>
 {
+  var testSettings = new DotNetCoreTestSettings 
+     {
+         Configuration = buildConfiguration
+     };
   Action<ICakeContext> runTests = ctx => { 
-	ctx.XUnit2("./**/bin/" + buildConfiguration + "/*Tests.dll");
+	ctx.DotNetCoreTest("./src/NodaTime.Serialization.ServiceStackText.UnitTests/NodaTime.Serialization.ServiceStackText.UnitTests.csproj", testSettings);
   };
 
   Action<DotCoverCoverageSettings> applySettings = settings => {
 	settings        
-	  .WithFilter("-:*Tests");
+	  .WithFilter("-:*Tests")
+	  .WithFilter("-:ServiceStack*");
   };
 
   if(TeamCity.IsRunningOnTeamCity) {
