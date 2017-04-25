@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using NodaTime.Text;
 using NodaTime.Utility;
 using Xunit;
 
 namespace NodaTime.Serialization.ServiceStackText.UnitTests
 {
-    [ExcludeFromCodeCoverage]
     public class ExtendedIsoIntervalSerializerTests
     {
         [Fact]

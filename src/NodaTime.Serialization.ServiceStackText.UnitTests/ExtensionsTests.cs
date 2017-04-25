@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using NodaTime.Testing;
+using ServiceStack;
 using ServiceStack.Text;
 using Xunit;
 
 namespace NodaTime.Serialization.ServiceStackText.UnitTests
 {
-    [ExcludeFromCodeCoverage]
     public class ExtensionsTests
     {
         public ExtensionsTests()
@@ -70,14 +69,14 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         public void ConfigureSerializersForNodaTime_NullSettings_NoException()
         {
             INodaSerializerSettings settings = null;
-            Assert.DoesNotThrow(settings.ConfigureSerializersForNodaTime);
+            settings.ConfigureSerializersForNodaTime();
         }
 
         [Fact]
         public void ConfigureSerializer_Nullserializer_NoException()
         {
             IServiceStackSerializer<LocalDate> serializer = null;
-            Assert.DoesNotThrow(serializer.ConfigureSerializer);
+            serializer.ConfigureSerializer();
         }
 
         [Fact]
@@ -194,7 +193,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         public void WithGeneralIsoZonedDateTimeSerializer_Serialize()
         {
             var clock = FakeClock.FromUtc(2014, 05, 02, 10, 30, 45);
-            var now = clock.Now.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
+            var now = clock.GetCurrentInstant().InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
             var serialisers = new DefaultNodaSerializerSettings(DateTimeZoneProviders.Tzdb)
                 .WithGeneralIsoZonedDateTimeSerializer();
 
@@ -208,7 +207,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
         public void WithGeneralIsoZonedDateTimeSerializer_Deserialize()
         {
             var clock = FakeClock.FromUtc(2014, 05, 02, 10, 30, 45);
-            var now = clock.Now.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
+            var now = clock.GetCurrentInstant().InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
             var serialisers = new DefaultNodaSerializerSettings(DateTimeZoneProviders.Tzdb)
                 .WithGeneralIsoZonedDateTimeSerializer();
 
@@ -236,17 +235,17 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
 
         private static object GetDeserializerTarget<T>()
         {
-            return GetDeserializerTarget<T>("DeSerializeFn");
+            return GetDeserializerTarget<T>(nameof(JsConfig<T>.DeSerializeFn));
         }
 
         private static object GetRawDeserializerTarget<T>()
         {
-            return GetDeserializerTarget<T>("RawDeserializeFn");
+            return GetDeserializerTarget<T>(nameof(JsConfig<T>.RawDeserializeFn));
         }
 
         private static object GetDeserializerTarget<T>(string name)
         {
-            var field = typeof(JsConfig<T>).GetField(name);
+            var field = typeof(JsConfig<T>).GetFieldInfo(name);
             object value;
             if (field != null)
             {

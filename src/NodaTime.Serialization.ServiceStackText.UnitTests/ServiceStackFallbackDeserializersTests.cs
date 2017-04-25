@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using Xunit;
 
 namespace NodaTime.Serialization.ServiceStackText.UnitTests
 {
-    [ExcludeFromCodeCoverage]
     public class ServiceStackFallbackDeserializersTests
     {
         [Fact]

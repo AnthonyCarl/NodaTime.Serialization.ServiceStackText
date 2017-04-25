@@ -24,7 +24,7 @@ namespace NodaTime.Serialization.ServiceStackText
         /// </summary>
         public static IServiceStackSerializer<LocalTime> LocalTimeSerializer =
             new StandardServiceStackSerializer<LocalTime>(
-                LocalTimePattern.ExtendedIsoPattern,
+                LocalTimePattern.ExtendedIso,
                 ServiceStackFallbackDeserializers.ToLocalTime);
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace NodaTime.Serialization.ServiceStackText
         /// </summary>
         public static readonly IServiceStackSerializer<LocalDate> LocalDateSerializer =
             new StandardServiceStackSerializer<LocalDate>(
-                LocalDatePattern.IsoPattern,
+                LocalDatePattern.Iso,
                 ServiceStackFallbackDeserializers.ToLocalDate,
                 CreateIsoValidator<LocalDate>(x => x.Calendar));
 
@@ -42,7 +42,7 @@ namespace NodaTime.Serialization.ServiceStackText
         /// </summary>
         public static readonly IServiceStackSerializer<LocalDateTime> LocalDateTimeSerializer =
             new StandardServiceStackSerializer<LocalDateTime>(
-                LocalDateTimePattern.ExtendedIsoPattern,
+                LocalDateTimePattern.ExtendedIso,
                 ServiceStackFallbackDeserializers.ToLocalDateTime,
                 CreateIsoValidator<LocalDateTime>(x => x.Calendar));
 
@@ -51,7 +51,7 @@ namespace NodaTime.Serialization.ServiceStackText
         /// </summary>
         public static readonly IServiceStackSerializer<OffsetDateTime> OffsetDateTimeSerializer =
             new StandardServiceStackSerializer<OffsetDateTime>(
-                OffsetDateTimePattern.ExtendedIsoPattern,
+                OffsetDateTimePattern.ExtendedIso,
                 ServiceStackFallbackDeserializers.ToOffsetDateTime,
                 CreateIsoValidator<OffsetDateTime>(x => x.Calendar));
 
@@ -80,7 +80,7 @@ namespace NodaTime.Serialization.ServiceStackText
         /// and don't need interoperability with systems expecting ISO.
         /// </summary>
         public static IServiceStackSerializer<Period> RoundtripPeriodSerializer =
-            new StandardServiceStackSerializer<Period>(PeriodPattern.RoundtripPattern);
+            new StandardServiceStackSerializer<Period>(PeriodPattern.Roundtrip);
 
         /// <summary>
         /// Normalizing ISO converter for <see cref="Period"/>. Use this when you want compatibility with systems expecting
@@ -88,7 +88,7 @@ namespace NodaTime.Serialization.ServiceStackText
         /// this converter losses information - after serialization and deserialization, "90 minutes" will become "an hour and 30 minutes".
         /// </summary>
         public static IServiceStackSerializer<Period> NormalizingIsoPeriodSerializer =
-            new StandardServiceStackSerializer<Period>(PeriodPattern.NormalizingIsoPattern);
+            new StandardServiceStackSerializer<Period>(PeriodPattern.NormalizingIso);
 
         /// <summary>
         /// Converter for <see cref="Duration"/>.
@@ -110,12 +110,12 @@ namespace NodaTime.Serialization.ServiceStackText
         /// Converter for <see cref="Offset"/>.
         /// </summary>
         public static IServiceStackSerializer<Offset> OffsetSerializer =
-            new StandardServiceStackSerializer<Offset>(OffsetPattern.GeneralInvariantPattern);
+            new StandardServiceStackSerializer<Offset>(OffsetPattern.GeneralInvariant);
         
         private static IServiceStackSerializer<Instant> CreateInstantSerializer()
         {
             return new StandardServiceStackSerializer<Instant>(
-                InstantPattern.ExtendedIsoPattern,
+                InstantPattern.ExtendedIso,
                 ServiceStackFallbackDeserializers.ToInstant);
         }
 
