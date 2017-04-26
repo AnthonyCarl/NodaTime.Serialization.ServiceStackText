@@ -1,4 +1,5 @@
 #tool "nuget:?package=JetBrains.dotCover.CommandLineTools"
+#tool "nuget:?package=xunit.runner.console"
 
 var target = Argument("target", "Default");
 var buildConfiguration = Argument("configuration", "Release");
@@ -52,35 +53,61 @@ Task("Test")
   .IsDependentOn("Build")
   .Does(() =>
 {
-  var testSettings = new DotNetCoreTestSettings 
-     {
-         Configuration = buildConfiguration
-     };
-  Action<ICakeContext> runTests = ctx => { 
-	ctx.DotNetCoreTest("./src/NodaTime.Serialization.ServiceStackText.UnitTests/NodaTime.Serialization.ServiceStackText.UnitTests.csproj", testSettings);
+  CopyDirectory("./src/NodaTime.Serialization.ServiceStackText.UnitTests/bin/" + buildConfiguration +"/net452", "./SsV4Test");
+  DeleteFile("./SsV4Test/ServiceStack.Text.dll");
+  CopyFile("./ServiceStack.Text.4/lib/net40/ServiceStack.Text.dll", "./SsV4Test/ServiceStack.Text.dll");
+
+  Action<ICakeContext, string> runTests = (ctx, framework) => { 
+    ctx.DotNetCoreTest("./src/NodaTime.Serialization.ServiceStackText.UnitTests/NodaTime.Serialization.ServiceStackText.UnitTests.csproj", new DotNetCoreTestSettings 
+        {
+          Configuration = buildConfiguration,
+          Framework = framework,
+          NoBuild = true
+        });
   };
 
-  Action<DotCoverCoverageSettings> applySettings = settings => {
-	settings        
-	  .WithFilter("-:*Tests")
-	  .WithFilter("-:ServiceStack*");
-  };
+  var coverSettings = new DotCoverCoverSettings()
+    .WithFilter("-:*Tests")
+    .WithFilter("-:ServiceStack*");
+
+  var coverageResultSsV4 = new FilePath("./dotcover/dotcoverSsV4.data");
+  DotCoverCover(
+    ctx => ctx.XUnit2("./SsV4Test/NodaTime.Serialization.ServiceStackText.UnitTests.dll"), 
+    coverageResultSsV4, 
+    coverSettings);
+
+  var coverageResult452 = new FilePath("./dotcover/dotcover452.data");
+  DotCoverCover(
+    ctx => runTests(ctx, "net452"), 
+    coverageResult452, 
+    coverSettings);
+
+  var coverageResultCoreApp = new FilePath("./dotcover/dotcoverCoreApp.data");
+  DotCoverCover(
+    ctx => runTests(ctx, "netcoreapp1.1"), 
+    coverageResultCoreApp, 
+    coverSettings);
+
+  var mergedData = new FilePath("./dotcover/dotcoverMerged.data");
+  DotCoverMerge(
+    new []{
+      coverageResultSsV4, 
+      coverageResult452, 
+      coverageResultCoreApp
+    }, 
+    mergedData, 
+    new DotCoverMergeSettings());
 
   if(TeamCity.IsRunningOnTeamCity) {
-    var coverageResult = new FilePath("./dotcover/dotcover.data");
-    var coverSettings = new DotCoverCoverSettings();
-    applySettings(coverSettings);
-    DotCoverCover(runTests, coverageResult, coverSettings);
     TeamCity.ImportDotCoverCoverage(
-      coverageResult, 
+      mergedData, 
       MakeAbsolute(Directory("./tools/JetBrains.dotCover.CommandLineTools/tools"))
     );
   }
   else {
     var htmlReportFile = new FilePath("./dotcover/dotcover.html");
-    var analyseSettings = new DotCoverAnalyseSettings { ReportType = DotCoverReportType.HTML};
-    applySettings(analyseSettings);
-    DotCoverAnalyse(runTests, htmlReportFile, analyseSettings);
+    var reportSettings = new DotCoverReportSettings { ReportType = DotCoverReportType.HTML};
+    DotCoverReport(mergedData, htmlReportFile, reportSettings);
     StartProcess("powershell", "start file:///" + MakeAbsolute(htmlReportFile));
   }
 });

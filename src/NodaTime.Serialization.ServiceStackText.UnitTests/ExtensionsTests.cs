@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.Serialization;
 using NodaTime.Testing;
-using ServiceStack;
 using ServiceStack.Text;
 using Xunit;
 
@@ -245,7 +245,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
 
         private static object GetDeserializerTarget<T>(string name)
         {
-            var field = typeof(JsConfig<T>).GetFieldInfo(name);
+            var field = typeof(JsConfig<T>).GetRuntimeField(name);
             object value;
             if (field != null)
             {
@@ -253,7 +253,7 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
             }
             else
             {
-                var property = typeof(JsConfig<T>).GetProperty(name);
+                var property = typeof(JsConfig<T>).GetRuntimeProperty(name);
                 value = property.GetValue(null, null);
             }
 

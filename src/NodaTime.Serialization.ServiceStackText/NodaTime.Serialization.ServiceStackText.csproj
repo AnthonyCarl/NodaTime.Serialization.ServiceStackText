@@ -6,7 +6,7 @@
     <Owners>Anthony Carl</Owners>
     <Copyright>Copyright 2017 Anthony Carl</Copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <Version>2.0.1.2999</Version>
+    <Version>2.0.1.52420</Version>
     <PackageProjectUrl>https://github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText</RepositoryUrl>
