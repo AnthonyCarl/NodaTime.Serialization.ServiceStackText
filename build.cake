@@ -46,7 +46,7 @@ Task("Build")
      {
          Configuration = buildConfiguration
      };
-  DotNetCoreBuild("./src", buildSettings);
+  DotNetCoreBuild("./src/NodaTime.Serialization.ServiceStackText.sln", buildSettings);
 });
 
 Task("Test")
