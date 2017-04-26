@@ -35,7 +35,7 @@ Task("Restore")
      {
          Sources = new[] {"https://api.nuget.org/v3/index.json"}
      };
-  DotNetCoreRestore("./src", restoreSettings);
+  DotNetCoreRestore("./src/NodaTime.Serialization.ServiceStackText.sln", restoreSettings);
 });
 
 Task("Build")
