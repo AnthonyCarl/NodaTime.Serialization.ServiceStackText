@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.3;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net45</TargetFrameworks>
     <Authors>Anthony Carl</Authors>
     <Owners>Anthony Carl</Owners>
-    <Copyright>Copyright 2017 Anthony Carl</Copyright>
+    <Copyright>Copyright 2018 Anthony Carl</Copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <Version>2.0.1.52420</Version>
+    <Version>3.0.0.43813</Version>
     <PackageProjectUrl>https://github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/AnthonyCarl/NodaTime.Serialization.ServiceStackText</RepositoryUrl>
@@ -14,12 +14,13 @@
     <RepositoryType></RepositoryType>
     <PackageTags>NodaTime Serializer ServiceStack ServiceStack.Text JSON Serialize date time timezone calendar</PackageTags>
     <Description>ServiceStack.Text JSON serializer support for NodaTime</Description>
+    <Title>ServiceStack.Text support for NodaTime</Title>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NodaTime" Version="2.0.0" />
     <PackageReference Include="ServiceStack.Text.Core" Version="1.0.1" Condition="'$(TargetFramework)' == 'netstandard1.3'" />
-    <PackageReference Include="ServiceStack.Text" Version="3.9.44" Condition="'$(TargetFramework)' == 'net45'" />
+    <PackageReference Include="ServiceStack.Text" Version="5.0.0" Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net45'" />
   </ItemGroup>
 
 </Project>

@@ -3,8 +3,8 @@
 
 var target = Argument("target", "Default");
 var buildConfiguration = Argument("configuration", "Release");
-var majorMinorVersion = "2.0";
-var baseDate = new DateTime(2017,04,25,0,0,0,0,DateTimeKind.Utc);
+var majorMinorVersion = "3.0";
+var baseDate = new DateTime(2018,05,02,0,0,0,0,DateTimeKind.Utc);
 var elapsedSinceBaseDate = DateTime.UtcNow - baseDate;
 var days = (int)elapsedSinceBaseDate.TotalDays;
 var revision = (int)(elapsedSinceBaseDate.Subtract(TimeSpan.FromDays(days)).TotalSeconds / 1.5);
@@ -53,10 +53,6 @@ Task("Test")
   .IsDependentOn("Build")
   .Does(() =>
 {
-  CopyDirectory("./src/NodaTime.Serialization.ServiceStackText.UnitTests/bin/" + buildConfiguration +"/net452", "./SsV4Test");
-  DeleteFile("./SsV4Test/ServiceStack.Text.dll");
-  CopyFile("./ServiceStack.Text.4/lib/net40/ServiceStack.Text.dll", "./SsV4Test/ServiceStack.Text.dll");
-
   Action<ICakeContext, string> runTests = (ctx, framework) => { 
     ctx.DotNetCoreTest("./src/NodaTime.Serialization.ServiceStackText.UnitTests/NodaTime.Serialization.ServiceStackText.UnitTests.csproj", new DotNetCoreTestSettings 
         {
@@ -67,14 +63,11 @@ Task("Test")
   };
 
   var coverSettings = new DotCoverCoverSettings()
+    .WithFilter("-:xunit*")
+    .WithFilter("-:NuGet*")
+    .WithFilter("-:MSBuild*")
     .WithFilter("-:*Tests")
     .WithFilter("-:ServiceStack*");
-
-  var coverageResultSsV4 = new FilePath("./dotcover/dotcoverSsV4.data");
-  DotCoverCover(
-    ctx => ctx.XUnit2("./SsV4Test/NodaTime.Serialization.ServiceStackText.UnitTests.dll"), 
-    coverageResultSsV4, 
-    coverSettings);
 
   var coverageResult452 = new FilePath("./dotcover/dotcover452.data");
   DotCoverCover(
@@ -88,12 +81,18 @@ Task("Test")
     coverageResultCoreApp, 
     coverSettings);
 
+  var coverageResultCoreApp20 = new FilePath("./dotcover/dotcoverCoreApp20.data");
+  DotCoverCover(
+    ctx => runTests(ctx, "netcoreapp2.0"), 
+    coverageResultCoreApp20, 
+    coverSettings);
+
   var mergedData = new FilePath("./dotcover/dotcoverMerged.data");
   DotCoverMerge(
     new []{
-      coverageResultSsV4, 
       coverageResult452, 
-      coverageResultCoreApp
+      coverageResultCoreApp,
+      coverageResultCoreApp20
     }, 
     mergedData, 
     new DotCoverMergeSettings());
@@ -119,7 +118,9 @@ Task("Pack")
   var packSettings = new DotNetCorePackSettings
      {
          Configuration = buildConfiguration,
-         OutputDirectory = "./ReleasePackages/"
+         OutputDirectory = "./ReleasePackages/",
+         ArgumentCustomization = args => args.Append("--include-symbols")
+                                             .Append("--include-source")
      };
   DotNetCorePack("./src/NodaTime.Serialization.ServiceStackText/NodaTime.Serialization.ServiceStackText.csproj", packSettings);
 });

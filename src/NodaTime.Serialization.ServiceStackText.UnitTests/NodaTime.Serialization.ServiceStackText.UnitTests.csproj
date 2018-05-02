@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <!--<TargetFramework>netcoreapp1.1</TargetFramework>-->
-    <TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.1;netcoreapp2.0;net452</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,9 +9,9 @@
     <PackageReference Include="NodaTime" Version="2.0.0" />
     <PackageReference Include="NodaTime.Testing" Version="2.0.0" />
     <PackageReference Include="ServiceStack.Text.Core" Version="1.0.1" Condition="'$(TargetFramework)' == 'netcoreapp1.1'" />
-    <PackageReference Include="ServiceStack.Text" Version="3.9.44" Condition="'$(TargetFramework)' == 'net452'" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="ServiceStack.Text" Version="5.0.0" Condition="'$(TargetFramework)' == 'netcoreapp2.0' Or '$(TargetFramework)' == 'net452'" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>
