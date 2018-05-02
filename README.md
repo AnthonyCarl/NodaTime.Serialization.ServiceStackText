@@ -1,7 +1,7 @@
 NodaTime.Serialization.ServiceStackText
 =======================================
 
-[`ServiceStack.Text`](https://github.com/ServiceStack/ServiceStack.Text) JSON serialization support for [`NodaTime v2`](http://nodatime.org/). This library will work with `v3.9.44` and later versions of `ServiceStack.Text` (including  `v4.0.x`) and `ServiceStack.Text.Core`.
+[`ServiceStack.Text`](https://github.com/ServiceStack/ServiceStack.Text) JSON serialization support for [`NodaTime v2`](http://nodatime.org/). This library will work with `v5.0` and later versions of `ServiceStack.Text` and `ServiceStack.Text.Core`.
 
 ## Typical Setup
 ```cs 
@@ -46,7 +46,6 @@ The `SerivceStack.Text` serializer uses the same default serialization formats a
 - If using with ServiceStack, serializer setup should occur before Init of the AppHost.
 - For Value types, this will also setup the nullable serializer for that value type.
 - Since this is a custom serializer for `ServiceStack.Text`, calls to `JsConfig.Reset()` will remove the custom serializers.
-- `v3.9.x` & `v4.0.x` compatibility is verified by running the same unit test assembly against the same serializer assembly twice - once with a `v3.9.44` and again with a `v4.0.42` `ServiceStack.Text` assembly.
 
 ## Using the Code
 
