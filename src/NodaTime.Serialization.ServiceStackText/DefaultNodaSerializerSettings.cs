@@ -8,6 +8,11 @@ namespace NodaTime.Serialization.ServiceStackText
     public class DefaultNodaSerializerSettings : INodaSerializerSettings
     {
         /// <summary>
+        /// The <see cref="AnnualDate"/> serializer to use.
+        /// </summary>
+        public IServiceStackSerializer<AnnualDate> AnnualDateSerializer { get; set; }
+
+        /// <summary>
         /// The <see cref="DateTimeZone"/> serializer to use.
         /// </summary>
         public IServiceStackSerializer<DateTimeZone> DateTimeZoneSerializer { get; set; }
@@ -78,6 +83,7 @@ namespace NodaTime.Serialization.ServiceStackText
                 throw new ArgumentNullException("provider");
             }
 
+            AnnualDateSerializer = NodaSerializerDefinitions.AnnualDateSerializer;
             DurationSerializer = NodaSerializerDefinitions.DurationSerializer;
             DateTimeZoneSerializer = NodaSerializerDefinitions.CreateDateTimeZoneSerializer(provider);
             InstantSerializer = NodaSerializerDefinitions.InstantSerializer;

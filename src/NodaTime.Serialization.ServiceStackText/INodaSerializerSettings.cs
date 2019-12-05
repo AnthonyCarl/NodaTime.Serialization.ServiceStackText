@@ -6,6 +6,10 @@ namespace NodaTime.Serialization.ServiceStackText
     public interface INodaSerializerSettings
     {
         /// <summary>
+        /// The <see cref="AnnualDate"/> ServiceStack.Text JSON serializer to use.
+        /// </summary>
+        IServiceStackSerializer<AnnualDate> AnnualDateSerializer { get; set; }
+        /// <summary>
         /// The <see cref="DateTimeZone"/> ServiceStack.Text JSON serializer to use.
         /// </summary>
         IServiceStackSerializer<DateTimeZone> DateTimeZoneSerializer { get; set; }
