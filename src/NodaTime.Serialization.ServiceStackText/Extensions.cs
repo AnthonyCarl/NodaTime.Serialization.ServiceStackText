@@ -13,16 +13,8 @@ namespace NodaTime.Serialization.ServiceStackText
         private static readonly object Mutex = new object();
         private static MethodInfo _nullableSerializerMethodInfo;
 
-        private static MethodInfo NullableSerializerMethodInfo
-        {
-            get
-            {
-                return _nullableSerializerMethodInfo
-                       ?? (_nullableSerializerMethodInfo =
-                           typeof(Extensions).GetTypeInfo().GetDeclaredMethod(nameof(ConfigureNullableSerializer)));
-                               //BindingFlags.NonPublic | BindingFlags.Static));
-            }
-        }
+        private static MethodInfo NullableSerializerMethodInfo => 
+            _nullableSerializerMethodInfo ??= typeof(Extensions).GetTypeInfo().GetDeclaredMethod(nameof(ConfigureNullableSerializer));
 
         /// <summary>
         ///     Used for fluent setting of serializerSettings. Nothing is done if the serializer or config action is null.
@@ -120,6 +112,7 @@ namespace NodaTime.Serialization.ServiceStackText
                 //nothing to do
                 return;
             }
+            nodaSerializerSettings.AnnualDateSerializer.ConfigureSerializer();
             nodaSerializerSettings.DateTimeZoneSerializer.ConfigureSerializer();
             nodaSerializerSettings.DurationSerializer.ConfigureSerializer();
             nodaSerializerSettings.InstantSerializer.ConfigureSerializer();
