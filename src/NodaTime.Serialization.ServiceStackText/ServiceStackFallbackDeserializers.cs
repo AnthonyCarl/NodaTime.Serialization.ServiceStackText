@@ -11,6 +11,18 @@ namespace NodaTime.Serialization.ServiceStackText
     public static class ServiceStackFallbackDeserializers
     {
         /// <summary>
+        /// Attempts to generate a <see cref="AnnualDate"/> by deserializing to a <see cref="DateTime"/> first.
+        /// </summary>
+        /// <param name="text">The JSON to deserialize.</param>
+        /// <returns>The deserialized <see cref="AnnualDate"/></returns>
+        /// <exception cref="SerializationException">Failed to deserialize to a <see cref="AnnualDate"/></exception>
+        public static AnnualDate ToAnnualDate(string text)
+        {
+            var dateTime = DeserializeStruct<DateTime>(text);
+            return new AnnualDate(dateTime.Month, dateTime.Day);
+        }
+
+        /// <summary>
         /// Attempts to generate a <see cref="Instant"/> by deserializing to a <see cref="DateTimeOffset"/> first.
         /// </summary>
         /// <param name="text">The JSON to deserialize.</param>
@@ -37,11 +49,11 @@ namespace NodaTime.Serialization.ServiceStackText
         }
 
         /// <summary>
-        /// Attempts to generate a <see cref="OffsetDateTime"/> by deserializing to a <see cref="DateTimeOffset"/> first.
+        /// Attempts to generate a <see cref="LocalDate"/> by deserializing to a <see cref="DateTimeOffset"/> first.
         /// </summary>
         /// <param name="text">The JSON to deserialize.</param>
-        /// <returns>The deserialized <see cref="OffsetDateTime"/></returns>
-        /// <exception cref="SerializationException">Failed to deserialize to a <see cref="OffsetDateTime"/></exception>
+        /// <returns>The deserialized <see cref="LocalDate"/></returns>
+        /// <exception cref="SerializationException">Failed to deserialize to a <see cref="LocalDate"/></exception>
         public static LocalDate ToLocalDate(string text)
         {
             var dateTimeOffset = DeserializeStruct<DateTimeOffset>(text);

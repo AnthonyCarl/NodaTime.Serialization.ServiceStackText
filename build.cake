@@ -1,14 +1,9 @@
-#tool "nuget:?package=JetBrains.dotCover.CommandLineTools"
-#tool "nuget:?package=xunit.runner.console"
+#tool "nuget:?package=JetBrains.dotCover.CommandLineTools&version=2019.2.3"
+#tool "nuget:?package=xunit.runner.console&version=2.4.1"
+#addin nuget:?package=Cake.GitVersioning&version=3.0.28
 
 var target = Argument("target", "Default");
 var buildConfiguration = Argument("configuration", "Release");
-var majorMinorVersion = "3.0";
-var baseDate = new DateTime(2018,05,02,0,0,0,0,DateTimeKind.Utc);
-var elapsedSinceBaseDate = DateTime.UtcNow - baseDate;
-var days = (int)elapsedSinceBaseDate.TotalDays;
-var revision = (int)(elapsedSinceBaseDate.Subtract(TimeSpan.FromDays(days)).TotalSeconds / 1.5);
-var version = majorMinorVersion + "." + days + "." + revision;
 
 Task("Default")
   .IsDependentOn("Pack")
@@ -19,12 +14,7 @@ Task("Default")
 Task("SetVersion")
   .Does(() =>
 {
-  TeamCity.SetBuildNumber(version);
-  XmlPoke(
-    "./src/NodaTime.Serialization.ServiceStackText/NodaTime.Serialization.ServiceStackText.csproj", 
-    "/Project/PropertyGroup/Version",
-    version
-  );
+  TeamCity.SetBuildNumber(GitVersioningGetVersion().SemVer2);
 });
 
 Task("Restore")
@@ -67,18 +57,14 @@ Task("Test")
     .WithFilter("-:NuGet*")
     .WithFilter("-:MSBuild*")
     .WithFilter("-:*Tests")
-    .WithFilter("-:ServiceStack*");
+    .WithFilter("-:ServiceStack*")
+    .WithFilter("-:NodaTime")
+    .WithFilter("-:NodaTime.Testing");
 
   var coverageResult452 = new FilePath("./dotcover/dotcover452.data");
   DotCoverCover(
     ctx => runTests(ctx, "net452"), 
     coverageResult452, 
-    coverSettings);
-
-  var coverageResultCoreApp = new FilePath("./dotcover/dotcoverCoreApp.data");
-  DotCoverCover(
-    ctx => runTests(ctx, "netcoreapp1.1"), 
-    coverageResultCoreApp, 
     coverSettings);
 
   var coverageResultCoreApp20 = new FilePath("./dotcover/dotcoverCoreApp20.data");
@@ -91,7 +77,6 @@ Task("Test")
   DotCoverMerge(
     new []{
       coverageResult452, 
-      coverageResultCoreApp,
       coverageResultCoreApp20
     }, 
     mergedData, 
@@ -100,7 +85,7 @@ Task("Test")
   if(TeamCity.IsRunningOnTeamCity) {
     TeamCity.ImportDotCoverCoverage(
       mergedData, 
-      MakeAbsolute(Directory("./tools/JetBrains.dotCover.CommandLineTools/tools"))
+      MakeAbsolute(Directory("./tools/JetBrains.dotCover.CommandLineTools.2019.2.3/tools"))
     );
   }
   else {
