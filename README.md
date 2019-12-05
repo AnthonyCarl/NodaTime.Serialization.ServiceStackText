@@ -50,10 +50,10 @@ The `SerivceStack.Text` serializer uses the same default serialization formats a
 ## Using the Code
 
 * [Install the NuGet Package](https://nuget.org/packages/NodaTime.Serialization.ServiceStackText)
-* [NuGet Packages from Latest Successful Build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt1209&tab=artifacts)
+* [NuGet Packages from Latest Successful Build](https://teamcity.jetbrains.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt1209&tab=artifacts)
 * You can check out the code and run `build.bat`. It will create NuGet packages you can consume in `.\ReleasePackages` or you can directly use the resulting binaries. 
  
 ## Continuous Integration
-[CodeBetter.com CI Build Status:](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt1209&guest=1) ![Build Status](http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt1209)/statusIcon)
+[JetBrains TeamCity CI Build Status:](https://teamcity.jetbrains.com/viewType.html?buildTypeId=bt1210&guest=1) ![Build Status](http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt1209)/statusIcon) 
 
-Special Thanks to [JetBrains](http://www.jetbrains.com/teamcity) and [CodeBetter](http://codebetter.com/codebetter-ci/) for hosting this project!
+Special Thanks to [JetBrains](http://www.jetbrains.com/teamcity) for hosting this project!
