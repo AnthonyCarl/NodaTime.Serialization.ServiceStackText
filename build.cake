@@ -1,14 +1,9 @@
 #tool "nuget:?package=JetBrains.dotCover.CommandLineTools&version=2019.2.3"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
+#addin nuget:?package=Cake.GitVersioning&version=3.0.28
 
 var target = Argument("target", "Default");
 var buildConfiguration = Argument("configuration", "Release");
-var majorMinorVersion = "3.1";
-var baseDate = new DateTime(2019,12,05,0,0,0,0,DateTimeKind.Utc);
-var elapsedSinceBaseDate = DateTime.UtcNow - baseDate;
-var days = (int)elapsedSinceBaseDate.TotalDays;
-var revision = (int)(elapsedSinceBaseDate.Subtract(TimeSpan.FromDays(days)).TotalSeconds / 1.5);
-var version = majorMinorVersion + "." + days + "." + revision;
 
 Task("Default")
   .IsDependentOn("Pack")
@@ -19,12 +14,7 @@ Task("Default")
 Task("SetVersion")
   .Does(() =>
 {
-  TeamCity.SetBuildNumber(version);
-  XmlPoke(
-    "./src/NodaTime.Serialization.ServiceStackText/NodaTime.Serialization.ServiceStackText.csproj", 
-    "/Project/PropertyGroup/Version",
-    version
-  );
+  TeamCity.SetBuildNumber(GitVersioningGetVersion().SemVer2);
 });
 
 Task("Restore")
@@ -95,7 +85,7 @@ Task("Test")
   if(TeamCity.IsRunningOnTeamCity) {
     TeamCity.ImportDotCoverCoverage(
       mergedData, 
-      MakeAbsolute(Directory("./tools/JetBrains.dotCover.CommandLineTools/tools"))
+      MakeAbsolute(Directory("./tools/JetBrains.dotCover.CommandLineTools.2019.2.3/tools"))
     );
   }
   else {

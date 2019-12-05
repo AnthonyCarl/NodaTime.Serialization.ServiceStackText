@@ -1,0 +1,9 @@
+<Project>
+  
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <Import Project="Directory.Build.*.props" />
+
+</Project>
