@@ -7,6 +7,14 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
     public class StandardServiceStackSerializerTests
     {
         [Fact]
+        public void AnnualDateConverter()
+        {
+            var value = new AnnualDate(12, 5);
+            string json = "12-05";
+            AssertConversions(value, json, NodaSerializerDefinitions.AnnualDateSerializer);
+        }
+
+        [Fact]
         public void Constructor_NullPattern_ArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() => new StandardServiceStackSerializer<int>(null));

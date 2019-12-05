@@ -10,6 +10,15 @@ namespace NodaTime.Serialization.ServiceStackText
     public static class NodaSerializerDefinitions
     {
         /// <summary>
+        /// Converter for <see cref="AnnualDate"/>, using the ISO-8601 date pattern.
+        /// </summary>
+        public static readonly IServiceStackSerializer<AnnualDate> AnnualDateSerializer =
+            new StandardServiceStackSerializer<AnnualDate>(
+                AnnualDatePattern.Iso,
+                ServiceStackFallbackDeserializers.ToAnnualDate
+            );
+
+        /// <summary>
         /// Converter for <see cref="Interval"/>. This uses the same <see cref="Instant"/> serializer as the default Instant Serializer.
         /// </summary>
         public static IServiceStackSerializer<Interval> ComplexIntervalSerializer = new ComplexJsonIntervalSerializer(CreateInstantSerializer());

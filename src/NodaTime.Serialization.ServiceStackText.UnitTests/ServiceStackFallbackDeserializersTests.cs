@@ -7,6 +7,27 @@ namespace NodaTime.Serialization.ServiceStackText.UnitTests
     public class ServiceStackFallbackDeserializersTests
     {
         [Fact]
+        public void ToAnnualDate_ValidText_Deserialize()
+        {
+            DeserializeAssert(
+                ServiceStackFallbackDeserializers.ToAnnualDate,
+                "2019-12-05 19:12:05Z",
+                 new AnnualDate(12,5));
+        }
+
+        [Fact]
+        public void ToAnnualDate_MalformedText_Throws()
+        {
+            MalformedTextAssert(ServiceStackFallbackDeserializers.ToAnnualDate);
+        }
+
+        [Fact]
+        public void ToAnnualDate_NullText_Throws()
+        {
+            NullTextAssert(ServiceStackFallbackDeserializers.ToAnnualDate);
+        }
+
+        [Fact]
         public void ToInstant_ValidText_Deserialize()
         {
             DeserializeAssert(

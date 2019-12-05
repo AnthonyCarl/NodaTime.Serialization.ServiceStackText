@@ -1,11 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodaTime.Serialization.ServiceStackText", "NodaTime.Serialization.ServiceStackText\NodaTime.Serialization.ServiceStackText.csproj", "{85C67FEF-0293-49C6-A34A-AB492C750226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NodaTime.Serialization.ServiceStackText", "NodaTime.Serialization.ServiceStackText\NodaTime.Serialization.ServiceStackText.csproj", "{85C67FEF-0293-49C6-A34A-AB492C750226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodaTime.Serialization.ServiceStackText.UnitTests", "NodaTime.Serialization.ServiceStackText.UnitTests\NodaTime.Serialization.ServiceStackText.UnitTests.csproj", "{05DECB1D-FDCB-4835-B6D5-F4CE51145263}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NodaTime.Serialization.ServiceStackText.UnitTests", "NodaTime.Serialization.ServiceStackText.UnitTests\NodaTime.Serialization.ServiceStackText.UnitTests.csproj", "{05DECB1D-FDCB-4835-B6D5-F4CE51145263}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC4AAF45-1EB6-4844-8481-7544B04DE170}"
+	ProjectSection(SolutionItems) = preProject
+		..\build.bat = ..\build.bat
+		..\build.cake = ..\build.cake
+		..\cake.config = ..\cake.config
+		..\LICENSE = ..\LICENSE
+		..\LICENSE_NodaTime = ..\LICENSE_NodaTime
+		..\LICENSE_ServiceStack = ..\LICENSE_ServiceStack
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +35,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A9DBFD07-2EF2-46C3-ADCD-D72FABF2E10B}
 	EndGlobalSection
 EndGlobal
