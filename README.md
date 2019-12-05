@@ -1,7 +1,7 @@
 NodaTime.Serialization.ServiceStackText
 =======================================
 
-[`ServiceStack.Text`](https://github.com/ServiceStack/ServiceStack.Text) JSON serialization support for [`NodaTime v2`](http://nodatime.org/). This library will work with `v5.0` and later versions of `ServiceStack.Text` and `ServiceStack.Text.Core`.
+[`ServiceStack.Text`](https://github.com/ServiceStack/ServiceStack.Text) JSON serialization support for [`NodaTime v2`](http://nodatime.org/). This library will work with `v5.0` and later versions of `ServiceStack.Text`.
 
 ## Typical Setup
 ```cs 
